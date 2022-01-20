@@ -2,7 +2,7 @@ import React from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 
 import SignInSide from './Auth/loginform';
-
+import ResponsiveAppBar from './navbar/navbar'
 
 
 
@@ -12,9 +12,8 @@ const App = () => {
     return (
             
             <Router>
-                
-                        
-                        <Route path="/" exact component={SignInSide} />
+                <ResponsiveAppBar/>
+                <Route path="/" exact component={SignInSide} />
                         
             </Router>
           
