@@ -132,6 +132,23 @@ def insert_post():
         return jsonify({"message": "An error occurred creating the post."}), 500
     return jsonify(post.json()), 201
 
+# Update Post
+@app.route("/update_post", methods=['POST'])
+def update_post():
+    data = request.get_json()
+    eprint(data)
+    post_title = data['post_title']
+    post = Post.query.filter_by(post_title=post_title).first()
+
+    if post:
+        post.post_title = data["post_title"]
+        post.post_description = data["post_description"]
+        post.post_image = data["post_image"]
+    try:
+        db.session.commit()
+    except:
+        return jsonify({"message": "An error occurred updating the post."}), 500
+    return jsonify(post.json()), 201
 
 # FOR DEBUGGING - eprint()period
 
