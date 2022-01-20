@@ -21,7 +21,7 @@ def eprint(*args, **kwargs):
     print(*args, file=sys.stderr, **kwargs)
 
 
-class liked_post(db.Model):
+class Liked_post(db.Model):
 
     __tablename__ = 'liked_post'
     user_id = db.Column(db.Integer(), primary_key=True)
@@ -34,10 +34,10 @@ class liked_post(db.Model):
     def json(self):
         return {"user_id": self.user_id, "post_id": self.post_id}
 
-class post(db.Model):
+class Post(db.Model):
 
     __tablename__ = 'post'
-    post_id = db.Column(db.Integer(), primary_key=True)
+    post_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     post_title = db.Column(db.String(50), nullable=False)
     post_description = db.Column(db.String(200), nullable=False)
     post_image = db.Column(db.String(300), nullable=False)
@@ -51,7 +51,7 @@ class post(db.Model):
     def json(self):
         return {"post_id": self.post_id, "post_title": self.post_title, "post_description": self.post_description, "post_image": self.post_image}
 
-class post_comment(db.Model):
+class Post_comment(db.Model):
 
     __tablename__ = 'post_comment'
     comment_id = db.Column(db.Integer(), primary_key=True)
@@ -68,7 +68,7 @@ class post_comment(db.Model):
     def json(self):
         return {"comment_id": self.comment_id, "user_id": self.user_id, "post_id": self.post_id, "comment": self.comment}
 
-class user(db.Model):
+class User(db.Model):
 
     __tablename__ = 'user'
     user_id = db.Column(db.Integer(), primary_key=True)
@@ -98,7 +98,43 @@ class user(db.Model):
 def eprint(*args, **kwargs):
     print(*args, file=sys.stderr, **kwargs)
 
+# Get all post
+@app.route("/post")
+def get_all_post():
+    return jsonify({"posts": [p.json() for p in Post.query.all()]})
 
+# Get all user's post
+@app.route("/post/<string:user_id>")
+def get_user_post(user_id):
+    allpost = Post_comment.query.filter_by(user_id=user_id).all()
+    all_post_id = []
+    for p in allpost:
+        post_id = p.post_id
+        all_post_id.append(post_id)
+    all_user_post = []
+    for pid in all_post_id:
+        post = Post.query.filter_by(post_id=pid).first()
+        print(post)
+        all_user_post.append(post.json())
+    if all_user_post:
+        return jsonify(all_user_post), 200
+    return jsonify({"message": "Post not found"}), 404
+
+# Insert Post
+@app.route("/insert_post", methods=['POST'])
+def insert_post():
+    data = request.get_json()
+    eprint(data)
+    lastpost = Post.query.order_by(Post.post_id.desc()).first()
+    print(lastpost.post_id)
+    data['post_id'] = int(lastpost.post_id) + 1
+    post = Post(**data) # **data represents the rest of the data
+    try:
+        db.session.add(post)
+        db.session.commit()
+    except:
+        return jsonify({"message": "An error occurred creating the post."}), 500
+    return jsonify(post.json()), 201
 
 
 if __name__ == "__main__":
