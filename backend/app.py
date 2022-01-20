@@ -100,7 +100,7 @@ class user(db.Model):
 
 class delete_post(db.Model):
     __tablename__ = 'delete_post'
-    post_id = db.Column(db.Integer())
+    post_id = db.Column(db.Integer(), primary_key=True)
     user_id = db.Column(db.Integer(), primary_key=True)
 
     def __init__(self, post_id, user_id):  # Initialise the objects
