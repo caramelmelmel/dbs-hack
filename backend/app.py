@@ -34,6 +34,7 @@ class Liked_post(db.Model):
     def json(self):
         return {"user_id": self.user_id, "post_id": self.post_id}
 
+
 class Post(db.Model):
 
     __tablename__ = 'post'
@@ -51,6 +52,7 @@ class Post(db.Model):
     def json(self):
         return {"post_id": self.post_id, "post_title": self.post_title, "post_description": self.post_description, "post_image": self.post_image}
 
+
 class Post_comment(db.Model):
 
     __tablename__ = 'post_comment'
@@ -67,6 +69,7 @@ class Post_comment(db.Model):
 
     def json(self):
         return {"comment_id": self.comment_id, "user_id": self.user_id, "post_id": self.post_id, "comment": self.comment}
+
 
 class User(db.Model):
 
@@ -95,11 +98,15 @@ class User(db.Model):
         return {"user_id": self.user_id, "name": self.name, "age": self.age, "birthday": self.birthday, "email": self.email, "phone": self.phone, "city": self.city, "country": self.country}
 
 # Get all post
+
+
 @app.route("/post")
 def get_all_post():
     return jsonify({"posts": [p.json() for p in Post.query.all()]})
 
 # Get all user's post
+
+
 @app.route("/post/<string:user_id>")
 def get_user_post(user_id):
     allpost = Post_comment.query.filter_by(user_id=user_id).all()
@@ -117,6 +124,8 @@ def get_user_post(user_id):
     return jsonify({"message": "Post not found"}), 404
 
 # Insert Post
+
+
 @app.route("/insert_post", methods=['POST'])
 def insert_post():
     data = request.get_json()
@@ -124,7 +133,7 @@ def insert_post():
     lastpost = Post.query.order_by(Post.post_id.desc()).first()
     print(lastpost.post_id)
     data['post_id'] = int(lastpost.post_id) + 1
-    post = Post(**data) # **data represents the rest of the data
+    post = Post(**data)  # **data represents the rest of the data
     try:
         db.session.add(post)
         db.session.commit()
@@ -133,6 +142,8 @@ def insert_post():
     return jsonify(post.json()), 201
 
 # Update Post
+
+
 @app.route("/update_post", methods=['POST'])
 def update_post():
     data = request.get_json()
@@ -152,21 +163,30 @@ def update_post():
 
 # FOR DEBUGGING - eprint()period
 
+
 class delete_post(db.Model):
     __tablename__ = 'delete_post'
     post_id = db.Column(db.Integer(), primary_key=True)
     user_id = db.Column(db.Integer(), primary_key=True)
-def eprint(*args, **kwargs):
-    print(*args, file=sys.stderr, **kwargs)
 
-def __init__(self, post_id, user_id):  # Initialise the objects
-    self.user_id = user_id
-    self.post_id = post_id
+    def __init__(self, post_id, user_id):  # Initialise the objects
+        self.user_id = user_id
+        self.post_id = post_id
 
-def json(self, post_id):
-    db.session.delete(post_id)
+    def json(self):
+        return {"user_id": self.user_id, "post_id": self.post_id}
+
+
+@app.route('/post/<int:post_id>', methods=['DELETE'])
+def delete(post_id):
+    result = delete_post.query.filter_by(post_id=post_id).all()
+    db.session.delete(result)
     db.session.commit()
     return ''
+
+
+def eprint(*args, **kwargs):
+    print(*args, file=sys.stderr, **kwargs)
 
 
 if __name__ == "__main__":
