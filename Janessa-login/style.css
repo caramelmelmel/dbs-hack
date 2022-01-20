@@ -23,7 +23,7 @@ a {
   max-width: 1300px;
   /* margin auto then center from left right */
   margin: auto;
-  /* padding so that items dont stickto side  */
+  /* padding so that items dont stick to  side  */
   padding-left: 25px;
   padding-right: 25px;
 }
