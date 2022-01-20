@@ -3,26 +3,26 @@ import { Entity, PrimaryGeneratedColumn, Column } from "typeorm";
 @Entity()
 export class User {
   @PrimaryGeneratedColumn()
-  userID: number;
+  User_ID: number;
 
   @Column()
-  name: string;
+  Name: string;
 
   @Column()
   age: number;
 
   @Column()
-  birthday: Date;
+  Birthday: Date;
 
   @Column()
-  email: string;
+  Email: string;
 
   @Column()
-  phone: number;
+  Phone: number;
 
   @Column()
-  city: string;
+  City: string;
 
   @Column()
-  country: string;
+  Country: string;
 }
