@@ -1,3 +1,7 @@
+main {
+  padding: 70px
+}
+
 .post {
     display: flex;
     border-bottom: 1px solid #e6ecf0;
@@ -19,7 +23,7 @@
     text-decoration: underline;
   }
   
-  .post-author {
+  .post-author-img {
     width: 49px;
     height: 49px;
     border-radius: 50%;
