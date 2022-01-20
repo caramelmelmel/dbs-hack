@@ -108,14 +108,16 @@ def get_user_post(name):
     user = User.query.filter_by(name=name).first().json()
     user_id = user['user_id']
     allpost = Post_comment.query.filter_by(user_id=user_id).all()
+    likedpost = Liked_post.query.filter_by(user_id=user_id).all()
     all_post_id = []
     for p in allpost:
-        post_id = p.post_id
-        all_post_id.append(post_id)
+        all_post_id.append(p.post_id)
+    for l in likedpost:
+        if l.post_id not in all_post_id:
+            all_post_id.append(l.post_id)
     all_user_post = []
     for pid in all_post_id:
         post = Post.query.filter_by(post_id=pid).first()
-        print(post)
         all_user_post.append(post.json())
     if all_user_post:
         return jsonify(all_user_post), 200
