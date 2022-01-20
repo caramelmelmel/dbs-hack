@@ -15,14 +15,13 @@ function LoginRouter() {
       userRouter.post("/", async (req: Request, res: Response) => {
         console.log("start");
         console.log(req.body);
-        // await userRepo.insert({
-        //   username: req.body.username,
-        //   realname: req.body.realname,
-        // });
-        if (req.body.password === "123") {
+
+        const results = await userRepo.findOne({ Name: req.body.Name });
+        console.log(results);
+        if (req.body.password === "123" && results) {
           res.status(200).send("Login Successfully");
         } else {
-          res.status(500).send("Login Successfully");
+          res.status(500).send("Login Fail");
         }
       });
     })
