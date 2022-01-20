@@ -22,15 +22,10 @@ def eprint(*args, **kwargs):
 
 
 class liked_post(db.Model):
-    """
-        This class is used to store the registered users in the database.
-        * Functions
-            - __init__(self, username, password, name, age, email, institution, credit)
-            - json(self)
-    """
+
     __tablename__ = 'liked_post'
-    user_id = db.Column(db.String(64), primary_key=True)
-    post_id = db.Column(db.String(64), primary_key=True)
+    user_id = db.Column(db.Integer(), primary_key=True)
+    post_id = db.Column(db.Integer(), primary_key=True)
 
     def __init__(self, user_id, post_id): #Initialise the objects
         self.user_id = user_id
@@ -39,10 +34,70 @@ class liked_post(db.Model):
     def json(self):
         return {"user_id": self.user_id, "post_id": self.post_id}
 
+class post(db.Model):
+
+    __tablename__ = 'post'
+    post_id = db.Column(db.Integer(), primary_key=True)
+    post_title = db.Column(db.String(50), nullable=False)
+    post_description = db.Column(db.String(200), nullable=False)
+    post_image = db.Column(db.String(300), nullable=False)
+
+    def __init__(self, post_id, post_title, post_description, post_image): #Initialise the objects
+        self.post_id = post_id
+        self.post_title = post_title
+        self.post_description = post_description
+        self.post_image = post_image
+
+    def json(self):
+        return {"post_id": self.post_id, "post_title": self.post_title, "post_description": self.post_description, "post_image": self.post_image}
+
+class post_comment(db.Model):
+
+    __tablename__ = 'post_comment'
+    comment_id = db.Column(db.Integer(), primary_key=True)
+    user_id = db.Column(db.Integer(), nullable=False)
+    post_id = db.Column(db.Integer(), nullable=False)
+    comment = db.Column(db.String(500), nullable=False)
+
+    def __init__(self, comment_id, user_id, post_id, comment): #Initialise the objects
+        self.comment_id = comment_id
+        self.user_id = user_id
+        self.post_id = post_id
+        self.comment = comment
+
+    def json(self):
+        return {"comment_id": self.comment_id, "user_id": self.user_id, "post_id": self.post_id, "comment": self.comment}
+
+class user(db.Model):
+
+    __tablename__ = 'user'
+    user_id = db.Column(db.Integer(), primary_key=True)
+    name = db.Column(db.String(50), nullable=False)
+    age = db.Column(db.Integer(), nullable=False)
+    birthday = db.Column(db.String(64), nullable=False)
+    email = db.Column(db.String(50), nullable=False)
+    phone = db.Column(db.String(50), nullable=False)
+    city = db.Column(db.String(50), nullable=False)
+    country = db.Column(db.String(50), nullable=False)
+
+    def __init__(self, user_id, name, age, birthday, email, phone, city, country): #Initialise the objects
+        self.user_id = user_id
+        self.name = name
+        self.age = age
+        self.birthday = birthday
+        self.email = email
+        self.phone = phone
+        self.city = city
+        self.country = country
+
+    def json(self):
+        return {"user_id": self.user_id, "name": self.name, "age": self.age, "birthday": self.birthday, "email": self.email, "phone": self.phone, "city": self.city, "country": self.country}
+
 
 #FOR DEBUGGING - eprint()period
 def eprint(*args, **kwargs):
     print(*args, file=sys.stderr, **kwargs)
+
 
 
 
