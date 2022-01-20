@@ -16,7 +16,7 @@ db = SQLAlchemy(app)
 CORS(app)
 
 
-#FOR DEBUGGING - eprint()
+# FOR DEBUGGING - eprint()
 def eprint(*args, **kwargs):
     print(*args, file=sys.stderr, **kwargs)
 
@@ -27,7 +27,7 @@ class Liked_post(db.Model):
     user_id = db.Column(db.Integer(), primary_key=True)
     post_id = db.Column(db.Integer(), primary_key=True)
 
-    def __init__(self, user_id, post_id): #Initialise the objects
+    def __init__(self, user_id, post_id):  # Initialise the objects
         self.user_id = user_id
         self.post_id = post_id
 
@@ -42,7 +42,7 @@ class Post(db.Model):
     post_description = db.Column(db.String(200), nullable=False)
     post_image = db.Column(db.String(300), nullable=False)
 
-    def __init__(self, post_id, post_title, post_description, post_image): #Initialise the objects
+    def __init__(self, post_id, post_title, post_description, post_image):  # Initialise the objects
         self.post_id = post_id
         self.post_title = post_title
         self.post_description = post_description
@@ -59,7 +59,7 @@ class Post_comment(db.Model):
     post_id = db.Column(db.Integer(), nullable=False)
     comment = db.Column(db.String(500), nullable=False)
 
-    def __init__(self, comment_id, user_id, post_id, comment): #Initialise the objects
+    def __init__(self, comment_id, user_id, post_id, comment):  # Initialise the objects
         self.comment_id = comment_id
         self.user_id = user_id
         self.post_id = post_id
@@ -80,7 +80,8 @@ class User(db.Model):
     city = db.Column(db.String(50), nullable=False)
     country = db.Column(db.String(50), nullable=False)
 
-    def __init__(self, user_id, name, age, birthday, email, phone, city, country): #Initialise the objects
+    # Initialise the objects
+    def __init__(self, user_id, name, age, birthday, email, phone, city, country):
         self.user_id = user_id
         self.name = name
         self.age = age
@@ -92,11 +93,6 @@ class User(db.Model):
 
     def json(self):
         return {"user_id": self.user_id, "name": self.name, "age": self.age, "birthday": self.birthday, "email": self.email, "phone": self.phone, "city": self.city, "country": self.country}
-
-
-#FOR DEBUGGING - eprint()period
-def eprint(*args, **kwargs):
-    print(*args, file=sys.stderr, **kwargs)
 
 # Get all post
 @app.route("/post")
@@ -135,6 +131,25 @@ def insert_post():
     except:
         return jsonify({"message": "An error occurred creating the post."}), 500
     return jsonify(post.json()), 201
+
+
+# FOR DEBUGGING - eprint()period
+
+class delete_post(db.Model):
+    __tablename__ = 'delete_post'
+    post_id = db.Column(db.Integer(), primary_key=True)
+    user_id = db.Column(db.Integer(), primary_key=True)
+def eprint(*args, **kwargs):
+    print(*args, file=sys.stderr, **kwargs)
+
+def __init__(self, post_id, user_id):  # Initialise the objects
+    self.user_id = user_id
+    self.post_id = post_id
+
+def json(self, post_id):
+    db.session.delete(post_id)
+    db.session.commit()
+    return ''
 
 
 if __name__ == "__main__":
