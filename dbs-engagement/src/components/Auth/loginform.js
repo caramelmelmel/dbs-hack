@@ -12,6 +12,7 @@ import Grid from "@mui/material/Grid";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
+import { useHistory } from "react-router-dom";
 
 function Copyright(props) {
   return (
@@ -34,7 +35,8 @@ function Copyright(props) {
 const theme = createTheme();
 
 export default function SignInSide() {
-  const handleSubmit = (event) => {
+  const history = useHistory();
+  const handleSubmit = async (event) => {
     event.preventDefault();
     const data2 = new FormData(event.currentTarget);
 
@@ -47,7 +49,7 @@ export default function SignInSide() {
       Name: name,
       password: password,
     };
-    const response = fetch("http://localhost:3001/api/v1/Login", {
+    const response = await fetch("http://localhost:3001/api/v1/Login", {
       method: "POST",
       mode: "cors",
       credentials: "same-origin",
@@ -56,7 +58,12 @@ export default function SignInSide() {
       },
       referrerPolicy: "no-referrer",
       body: JSON.stringify(data),
-    });
+    })
+      .then((res) => res.text())
+      .then((res) => res);
+    console.log(response);
+    history.push("/");
+    //.then((res) => res);
   };
 
   return (
