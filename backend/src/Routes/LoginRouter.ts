@@ -3,6 +3,7 @@ import { Router } from "express";
 import "reflect-metadata";
 import { createConnection } from "typeorm";
 import { User } from "../entity/User";
+import jwt from "jsonwebtoken";
 
 function LoginRouter() {
   const userRouter = Router();
@@ -19,7 +20,10 @@ function LoginRouter() {
         const results = await userRepo.findOne({ Name: req.body.Name });
         console.log(results);
         if (req.body.password === "123" && results) {
-          res.status(200).send("Login Successfully");
+          const payload = { Name: req.body.Name };
+          const token = jwt.sign(payload, "secret", { expiresIn: 12000000 });
+          console.log(token);
+          res.status(200).send({ Msg: "Login Successfully", Token: token });
         } else {
           res.status(500).send("Login Fail");
         }
