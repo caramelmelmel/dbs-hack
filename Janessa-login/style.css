@@ -1,0 +1,173 @@
+/* css style that is applicable to all element */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  /* uses google font  */
+  font-family: "Poppins", sans-serif;
+}
+/* link tag */
+a {
+  text-decoration: none;
+  color: #555;
+}
+
+.header {
+  background: radial-gradient(#fff, #ffd6d6);
+}
+
+.container {
+  max-width: 1300px;
+  /* margin auto then center from left right */
+  margin: auto;
+  /* padding so that items dont stickto side  */
+  padding-left: 25px;
+  padding-right: 25px;
+}
+
+/* .menu-icon {
+  display: none;
+  width: 28px;
+  margin-left: 20px;
+} */
+
+/* the image row  */
+.row {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  /*---------*/
+}
+.header .row {
+  /* to push "give ur work out down" */
+  margin-top: 70px;
+}
+.col-2 {
+  /* occupy 50% of space */
+  flex-basis: 50%;
+
+  min-width: 300px;
+}
+
+.col-2 img {
+  max-width: 100%;
+  padding: 50px 0;
+}
+.col-2 h1 {
+  font-size: 50px;
+  line-height: 60px;
+  margin: 25px 0;
+}
+.btn {
+  display: inline-block;
+  background: #ff523b;
+  color: #fff;
+  padding: 8px 30px;
+  margin: 30px 0;
+  border-radius: 30px;
+  /* login hover upon */
+  transition: background 0.5s;
+}
+.btn:hover {
+  background: #563434;
+}
+
+/*---------------------------------------account page---------------------------*/
+
+/* .col-2 {
+   occupy 50% of space 
+  flex-basis: 50%;
+
+  min-width: 300px;
+}
+
+.col-2 img {
+  max-width: 100%;
+  padding: 50px 0;
+} */
+
+.account-page {
+  padding: 50px 0;
+  background: radial-gradient(#fff, #ffd6d6);
+}
+
+.form-container {
+  background: #fff;
+  width: 300px;
+  height: 400px;
+  position: relative;
+  text-align: center;
+  padding: 20px 0;
+  margin: auto;
+  box-shadow: 0 0 20px 0px rgba(0, 0, 0, 0.1);
+  /* overflow hidden is to hide the form overlow in javascript  */
+  overflow: hidden;
+}
+/* login register */
+.form-container span {
+  font-weight: bold;
+  padding: 0 10px;
+  color: #555;
+  cursor: pointer;
+  width: 100px;
+  /* display in as a block  */
+  display: inline-block;
+}
+
+.form-btn {
+  display: inline-block;
+}
+
+/* indicator line for showing whether it is login or register  */
+#indicator {
+  width: 100px;
+  border: none;
+  background: #ff523b;
+  height: 3px;
+  margin-top: 8px;
+  /* originally indicator line underline register indicated by translateX(100px) ==( 100,0)  */
+  transform: translateX(100px);
+  transition: transform 1s;
+}
+
+.form-container form {
+  max-width: 300px;
+  padding: 0 20px;
+  position: absolute;
+  top: 130px;
+  transition: transform 1s;
+}
+
+/* password , name , email etc input box  */
+form input {
+  width: 100%;
+  height: 30px;
+  margin: 10px 0;
+  padding: 0 10px;
+  border: 1px solid #ccc;
+}
+form input:focus {
+  outline: none;
+}
+form .btn {
+  width: 100%;
+  border: none;
+  cursor: pointer;
+  margin: 10px 0;
+}
+
+form a {
+  font-size: 12px;
+}
+/* originally log in form is on the left by -300 */
+#LoginForm {
+  left: -300px;
+}
+/* orginally reg form is in the login container */
+#RegForm {
+  left: 0;
+}

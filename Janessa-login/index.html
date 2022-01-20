@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Page </title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+<body>
+    
+       <div class="container">
+          
+              <div class="logo">
+                  <a href="index.html"><img src="images/socialmediaIcon.png" width="125px" ></a>
+              </div>
+             
+            
+       </div>
+       
+       
+<!--------------account page --------------->
+<div class="account-page">
+
+   
+    <div class="container">
+  
+       <div class="row">
+         
+          <div class="col-2">
+             <img src=" " width="100%">
+          </div>
+          
+           <div class="col-2">
+               <!-- ......... -->
+              <div class="form-container">
+                 <div class="form-btn">
+                     <!-- javascript in span -->
+                     <span onclick="login()">Login</span>
+                     <span onclick="register()">Register</span>
+                     <hr id="indicator">
+                     <!-- indicator highlight which form login or register active -->
+                     <!-- javascript bottom -->
+                 </div>
+                 
+               <form id="LoginForm">
+                   <input type="text" placeholder="Username">
+                   <input type="password" placeholder="Password">
+                   <button type="submit" class="btn">Login</button>
+                   <a href="">Forgot password</a>
+               </form>
+
+               <form id="RegForm">
+                   <input type="text" placeholder="Username">
+                   <input type="email" placeholder="Email">
+                   <input type="password" placeholder="Password">
+                   <button type="submit" class="btn">Register</button>
+               </form>
+              </div>
+              <!-- ................ -->
+           </div>
+       </div>
+</div>
+</div>
+
+
+<!-- Javascript to allow toggling  -->
+<script>
+    var LoginForm = document.getElementById("LoginForm");
+    var RegForm = document.getElementById("RegForm");
+    var Indicator = document.getElementById("indicator");
+    
+    function register(){
+            RegForm.style.transform = "translateX(0px)";
+            LoginForm.style.transform = "translateX(0px)";
+            Indicator.style.transform = "translateX(100px)"
+
+        };
+    function login(){
+            RegForm.style.transform = "translateX(300px)";
+            LoginForm.style.transform = "translateX(300px)";
+            Indicator.style.transform = "translateX(0px)"
+        };
+
+        //  go to form-container in css to see the "hide portion" under overflow 
+        
+</script>
+    
+    
+    
+</body>
+</html>
+
