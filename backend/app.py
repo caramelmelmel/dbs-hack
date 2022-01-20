@@ -128,6 +128,8 @@ def get_user_post(name):
 def insert_post():
     data = request.get_json()
     eprint(data)
+    if (Post.query.filter_by(post_title=data['post_title']).first()):
+        return jsonify({"message": "A post with the same title already exists."}), 400
     lastpost = Post.query.order_by(Post.post_id.desc()).first()
     print(lastpost.post_id)
     data['post_id'] = int(lastpost.post_id) + 1
