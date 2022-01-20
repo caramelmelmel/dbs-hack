@@ -53,3 +53,10 @@ main {
     color: #14171a;
     margin-right: 5px;
   }
+
+  .likescomments {
+    font-family: sans-serif;
+    font-size: 12px;
+    color: #9a9fa3;
+    margin-right: 5px;
+  }
