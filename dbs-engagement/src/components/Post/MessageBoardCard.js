@@ -7,20 +7,20 @@ const MessageBoardCard = (props) => {
     // messages to be retrieved from db
     const messages = [
         {
-            "name": "Keenan",
-            "message": "Hi Mel, Really good job with the code!",
+            "name": "Brose McCreery",
+            "message": "Walking up and down the aisles for what seems like hours.",
             "timestamp":"11/08/2021",
             "sentiment": "positive"
         },
         {
-            "name": "Joshua",
-            "message": "Mel, thanks for guiding me with react!",
+            "name": "Brose McCreery",
+            "message": "We Did it!",
             "timestamp":"10/08/2021",
             "sentiment":"positive"
         },
         {
-            "name": "Zoe",
-            "message": "Mel, you are so good with backend!",
+            "name": "Brose McCreery",
+            "message": "Taking a walk with my love",
             "timestamp":"12/09/2021",
             "sentiment": "positive"
         },
@@ -131,49 +131,7 @@ const MessageBoardCard = (props) => {
             
         <Card.Group>
             {filterMessage(props.sentiment, messages)}
-            {/* <Card>
-                <Card.Content>
-                    <Card.Header>Matthew Harris</Card.Header>
-                    <Card.Meta>Co-Worker</Card.Meta>
-                    <Card.Description>
-                    Matthew is a pianist living in Nashville.
-                    </Card.Description>
-                </Card.Content>
-            </Card>
-            
-            <Card>
-                <Card.Content>
-                    <Card.Header>Matthew Harris</Card.Header>
-                    <Card.Meta>Co-Worker</Card.Meta>
-                    <Card.Description>
-                    Matthew is a pianist living in Nashville.
-                    </Card.Description>
-                </Card.Content>
-            </Card>
-            <Card>
-                <Card.Content>
-                    <Card.Header content='Jake Smith' />
-                    <Card.Meta content='Musicians' />
-                    <Card.Description content='Jake is a drummer living in New York.' />
-                </Card.Content>
-            </Card>
-            <Card>
-                <Card.Content
-                    header='Elliot Baker'
-                    meta='Friend'
-                    description='Elliot is a music producer living in Chicago.'
-                />
-            </Card>
-            <Card
-                header='Jenny Hess'
-                meta='Friend'
-                description='Jenny is a student studying Media Management at the New School'
-            />
-            <Card
-                header='Jenny Hess'
-                meta='Friend'
-                description='Jenny is a student studying Media Management at the New School'
-            /> */}
+            {}
         </Card.Group>
         
     );

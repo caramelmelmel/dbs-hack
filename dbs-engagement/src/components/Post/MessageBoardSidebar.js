@@ -48,17 +48,17 @@ const MessageBoardSidebar = (props) => {
                         </Menu.Item>
                         <Menu.Item onClick={() => {props.sentimentCallback("positive")}} key="2" icon={<Icon circular inverted color='teal' name='check' />}>
                             
-                            Positive
+                            My Posts
                         </Menu.Item>
                     
                         <Menu.Item onClick={() => {props.sentimentCallback("neutral")}}  key="3" icon={<Icon circular inverted color='blue' name='minus' />}>
                             
-                            Neutral
+                            My Friends
                         </Menu.Item>
 
                         <Menu.Item onClick={() => {props.sentimentCallback("negative")}} key="4" icon={<Icon circular inverted color='red' name='close' />}>
                             
-                            Negative
+                            Public
                         </Menu.Item>
                     </Menu>
                 </Sider>
