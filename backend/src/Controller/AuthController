@@ -1,0 +1,21 @@
+import { Request, Response } from "express";
+import * as jwt from "jsonwebtoken";
+import { createConnection } from "typeorm";
+import { Router } from "express";
+
+import { User } from "../entity/User";
+
+function AuthController() {
+  const userRouter = Router();
+  createConnection().then((connection) => {
+    const userRepository = connection.getRepository(User);
+  });
+
+  //     const userRepository = createConnection(User);
+  // let user: User;
+  // try {
+  //   user = await userRepository.findOneOrFail({ where: { username } });
+  // } catch (error) {
+  //   res.status(401).send();
+  // }
+}
