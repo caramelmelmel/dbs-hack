@@ -110,7 +110,7 @@ class delete_post(db.Model):
     def json(self, post_id):
         db.session.delete(post_id)
         db.session.commit()
-        return '', 204
+        return ''
 
 # FOR DEBUGGING - eprint()period
 
