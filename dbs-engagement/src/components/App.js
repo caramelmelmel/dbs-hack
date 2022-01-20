@@ -2,7 +2,8 @@ import React from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 
 import SignInSide from './Auth/loginform';
-import ResponsiveAppBar from './navbar/navbar'
+import MessageBoard from './Post/MessageBoard';
+
 
 
 
@@ -12,9 +13,10 @@ const App = () => {
     return (
             
             <Router>
-                <ResponsiveAppBar/>
-                <Route path="/" exact component={SignInSide} />
+
                         
+                <Route path="/" exact component={SignInSide} />
+                <Route path='/posts' exact component={MessageBoard}/>        
             </Router>
           
     );
