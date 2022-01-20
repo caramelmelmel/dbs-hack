@@ -62,7 +62,7 @@ export default function SignInSide() {
       .then((res) => res.text())
       .then((res) => res);
     console.log(response);
-    history.push("/");
+    history.push("/posts");
     //.then((res) => res);
   };
 
