@@ -13,6 +13,7 @@ const App = () => {
     return (
             
             <Router>
+
                         
                 <Route path="/" exact component={SignInSide} />
                 <Route path='/posts' exact component={MessageBoard}/>        

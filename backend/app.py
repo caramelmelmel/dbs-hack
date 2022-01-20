@@ -4,10 +4,13 @@ from flask import Flask, request, jsonify
 from flask_sqlalchemy import SQLAlchemy
 from flask_cors import CORS
 from os import environ
+import jwt
+from functools import wraps
 
 
 app = Flask(__name__)
 # app.config['SQLALCHEMY_DATABASE_URI'] = environ.get('dbURL')
+app.config['SECRET_KEY'] = "secret"
 app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+mysqlconnector://root@localhost:3306/socialmedia'
 # app.config["JSON_SORT_KEYS"] = False
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
@@ -97,13 +100,42 @@ class User(db.Model):
     def json(self):
         return {"user_id": self.user_id, "name": self.name, "age": self.age, "birthday": self.birthday, "email": self.email, "phone": self.phone, "city": self.city, "country": self.country}
 
+def token_required(f):
+    @wraps(f)
+    def decorated(*args, **kwargs):
+        token = None
+        # jwt is passed in the request header
+        if 'x-access-token' in request.headers:
+            token = request.headers['x-access-token']
+        # return 401 if token is not passed
+        if not token:
+            return jsonify({'message' : 'Token is missing !!'}), 401
+  
+        try:
+            # decoding the payload to fetch the stored details
+            # print(token, app.config['SECRET_KEY'])
+            data = jwt.decode(token, app.config['SECRET_KEY'])
+            # print(data)
+            return f(*args, **kwargs)
+        except:
+            return jsonify({
+                'message' : 'Token is invalid !!'
+            }), 401
+        # returns the current logged in users contex to the routes
+        return  f(*args, **kwargs)
+  
+    return decorated
+
+
 # Get all post
-@app.route("/post")
+@app.route("/post", methods=['GET'])
+@token_required
 def get_all_post():
     return jsonify({"posts": [p.json() for p in Post.query.all()]})
 
 # Get all user's post
 @app.route("/post/<string:name>")
+@token_required
 def get_user_post(name):
     user = User.query.filter_by(name=name).first().json()
     user_id = user['user_id']
@@ -125,6 +157,7 @@ def get_user_post(name):
 
 # Insert Post
 @app.route("/insert_post", methods=['POST'])
+@token_required
 def insert_post():
     data = request.get_json()
     eprint(data)
@@ -143,6 +176,7 @@ def insert_post():
 
 # Update Post
 @app.route("/update_post", methods=['POST'])
+@token_required
 def update_post():
     data = request.get_json()
     eprint(data)
@@ -161,6 +195,7 @@ def update_post():
 
 # Delete Post
 @app.route("/delete_post/<string:name>", methods=['POST'])
+@token_required
 def delete_post(name):
     data = request.get_json()
     post_title = data['post_title']
