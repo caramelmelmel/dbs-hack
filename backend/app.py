@@ -98,17 +98,15 @@ class User(db.Model):
         return {"user_id": self.user_id, "name": self.name, "age": self.age, "birthday": self.birthday, "email": self.email, "phone": self.phone, "city": self.city, "country": self.country}
 
 # Get all post
-
-
 @app.route("/post")
 def get_all_post():
     return jsonify({"posts": [p.json() for p in Post.query.all()]})
 
 # Get all user's post
-
-
-@app.route("/post/<string:user_id>")
-def get_user_post(user_id):
+@app.route("/post/<string:name>")
+def get_user_post(name):
+    user = User.query.filter_by(name=name).first().json()
+    user_id = user['user_id']
     allpost = Post_comment.query.filter_by(user_id=user_id).all()
     all_post_id = []
     for p in allpost:
@@ -124,8 +122,6 @@ def get_user_post(user_id):
     return jsonify({"message": "Post not found"}), 404
 
 # Insert Post
-
-
 @app.route("/insert_post", methods=['POST'])
 def insert_post():
     data = request.get_json()
@@ -142,8 +138,6 @@ def insert_post():
     return jsonify(post.json()), 201
 
 # Update Post
-
-
 @app.route("/update_post", methods=['POST'])
 def update_post():
     data = request.get_json()
@@ -161,32 +155,44 @@ def update_post():
         return jsonify({"message": "An error occurred updating the post."}), 500
     return jsonify(post.json()), 201
 
-# FOR DEBUGGING - eprint()period
+# Delete Post
+@app.route("/delete_post/<string:name>", methods=['POST'])
+def delete_post(name):
+    data = request.get_json()
+    post_title = data['post_title']
+    actual = Post.query.filter_by(post_title=post_title).first()
+    if actual:
+        post = actual.json()
+        post_id = post['post_id']
+        
+        comment_post = Post_comment.query.filter_by(post_id=post_id).all()
+        liked_post = Liked_post.query.filter_by(post_id=post_id).all()
 
+        for p in comment_post:
+            print(p.json())
+            if p:
+                try:
+                    db.session.delete(p)
+                    db.session.commit()
+                except:
+                    return jsonify({"message": "An error occurred deleting the post."}), 500
+        for l in liked_post:
+            print(l.json())
+            if l:
+                try:
+                    db.session.delete(l)
+                    db.session.commit()
+                except:
+                    return jsonify({"message": "An error occurred deleting the post."}), 500
+        if actual:
+            try:
+                db.session.delete(actual)
+                db.session.commit()
+            except:
+                return jsonify({"message": "An error occurred deleting the post."}), 500
 
-class delete_post(db.Model):
-    __tablename__ = 'delete_post'
-    post_id = db.Column(db.Integer(), primary_key=True)
-    user_id = db.Column(db.Integer(), primary_key=True)
-
-    def __init__(self, post_id, user_id):  # Initialise the objects
-        self.user_id = user_id
-        self.post_id = post_id
-
-    def json(self):
-        return {"user_id": self.user_id, "post_id": self.post_id}
-
-
-@app.route('/delete/<int:post_id>', methods=['DELETE'])
-def delete(post_id):
-    result = delete_post.query.filter_by(post_id=post_id).all()
-    db.session.delete(result)
-    db.session.commit()
-    return ''
-
-
-def eprint(*args, **kwargs):
-    print(*args, file=sys.stderr, **kwargs)
+        return jsonify({"message": "The post is deleted"}), 201
+    return jsonify({"message": "No post found"}), 500
 
 
 if __name__ == "__main__":
