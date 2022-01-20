@@ -177,7 +177,7 @@ class delete_post(db.Model):
         return {"user_id": self.user_id, "post_id": self.post_id}
 
 
-@app.route('/post/<int:post_id>', methods=['DELETE'])
+@app.route('/delete/<int:post_id>', methods=['DELETE'])
 def delete(post_id):
     result = delete_post.query.filter_by(post_id=post_id).all()
     db.session.delete(result)
