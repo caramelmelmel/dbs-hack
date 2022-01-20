@@ -1,0 +1,22 @@
+header {
+    position: fixed;
+    left:0;
+    right:0;
+    top:0;
+    height: 70px;
+    width: 100%;
+    background: #009578;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0,5);
+}
+
+.main-logo {
+    height: 100%;
+    padding: 10px 15px;
+    box-sizing:  border-box;
+    border-radius: 50%;
+}
+
+.main-header {
+    font-family: Arial, Helvetica, sans-serif;
+    color: white;
+}
